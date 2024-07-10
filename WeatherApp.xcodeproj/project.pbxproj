@@ -14,6 +14,13 @@
 		724FC7B82C3EB0D500CDA561 /* MainWeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724FC7B72C3EB0D500CDA561 /* MainWeatherViewController.swift */; };
 		724FC7BD2C3EB16200CDA561 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724FC7BC2C3EB16200CDA561 /* BaseViewController.swift */; };
 		724FC7C32C3EB68500CDA561 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 724FC7C22C3EB68500CDA561 /* .gitignore */; };
+		724FC7C52C3EB78E00CDA561 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724FC7C42C3EB78E00CDA561 /* MainViewModel.swift */; };
+		724FC7C92C3EB99000CDA561 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724FC7C82C3EB99000CDA561 /* Observable.swift */; };
+		724FC7CC2C3EBDFB00CDA561 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 724FC7CB2C3EBDFB00CDA561 /* Alamofire */; };
+		724FC7CF2C3EBE0800CDA561 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 724FC7CE2C3EBE0800CDA561 /* SnapKit */; };
+		724FC7D12C3EC36600CDA561 /* OpenWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724FC7D02C3EC36600CDA561 /* OpenWeather.swift */; };
+		724FC7D42C3ECBB400CDA561 /* WeatherAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724FC7D32C3ECBB400CDA561 /* WeatherAPIManager.swift */; };
+		724FC7D72C3ECC7200CDA561 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724FC7D62C3ECC7200CDA561 /* APIKey.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +33,11 @@
 		724FC7B72C3EB0D500CDA561 /* MainWeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWeatherViewController.swift; sourceTree = "<group>"; };
 		724FC7BC2C3EB16200CDA561 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		724FC7C22C3EB68500CDA561 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		724FC7C42C3EB78E00CDA561 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		724FC7C82C3EB99000CDA561 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		724FC7D02C3EC36600CDA561 /* OpenWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWeather.swift; sourceTree = "<group>"; };
+		724FC7D32C3ECBB400CDA561 /* WeatherAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAPIManager.swift; sourceTree = "<group>"; };
+		724FC7D62C3ECC7200CDA561 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +45,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				724FC7CC2C3EBDFB00CDA561 /* Alamofire in Frameworks */,
+				724FC7CF2C3EBE0800CDA561 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +73,8 @@
 		724FC7A22C3EB03400CDA561 /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				724FC7D52C3ECBD400CDA561 /* Network */,
+				724FC7C72C3EB98700CDA561 /* Observable */,
 				724FC7C02C3EB19700CDA561 /* MainView */,
 				724FC7BB2C3EB14900CDA561 /* Base */,
 				724FC7A32C3EB03400CDA561 /* AppDelegate.swift */,
@@ -66,6 +82,7 @@
 				724FC7AC2C3EB03600CDA561 /* Assets.xcassets */,
 				724FC7AE2C3EB03600CDA561 /* LaunchScreen.storyboard */,
 				724FC7B12C3EB03600CDA561 /* Info.plist */,
+				724FC7D62C3ECC7200CDA561 /* APIKey.swift */,
 			);
 			path = WeatherApp;
 			sourceTree = "<group>";
@@ -81,7 +98,9 @@
 		724FC7C02C3EB19700CDA561 /* MainView */ = {
 			isa = PBXGroup;
 			children = (
+				724FC7D22C3EC36B00CDA561 /* Model */,
 				724FC7C12C3EB1D900CDA561 /* ViewController */,
+				724FC7C62C3EB79300CDA561 /* ViewModel */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
@@ -92,6 +111,38 @@
 				724FC7B72C3EB0D500CDA561 /* MainWeatherViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		724FC7C62C3EB79300CDA561 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				724FC7C42C3EB78E00CDA561 /* MainViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		724FC7C72C3EB98700CDA561 /* Observable */ = {
+			isa = PBXGroup;
+			children = (
+				724FC7C82C3EB99000CDA561 /* Observable.swift */,
+			);
+			path = Observable;
+			sourceTree = "<group>";
+		};
+		724FC7D22C3EC36B00CDA561 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				724FC7D02C3EC36600CDA561 /* OpenWeather.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		724FC7D52C3ECBD400CDA561 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				724FC7D32C3ECBB400CDA561 /* WeatherAPIManager.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -110,6 +161,10 @@
 			dependencies = (
 			);
 			name = WeatherApp;
+			packageProductDependencies = (
+				724FC7CB2C3EBDFB00CDA561 /* Alamofire */,
+				724FC7CE2C3EBE0800CDA561 /* SnapKit */,
+			);
 			productName = WeatherApp;
 			productReference = 724FC7A02C3EB03400CDA561 /* WeatherApp.app */;
 			productType = "com.apple.product-type.application";
@@ -138,6 +193,10 @@
 				Base,
 			);
 			mainGroup = 724FC7972C3EB03400CDA561;
+			packageReferences = (
+				724FC7CA2C3EBDFB00CDA561 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				724FC7CD2C3EBE0800CDA561 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 724FC7A12C3EB03400CDA561 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -165,10 +224,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				724FC7C52C3EB78E00CDA561 /* MainViewModel.swift in Sources */,
 				724FC7A42C3EB03400CDA561 /* AppDelegate.swift in Sources */,
+				724FC7D42C3ECBB400CDA561 /* WeatherAPIManager.swift in Sources */,
 				724FC7BD2C3EB16200CDA561 /* BaseViewController.swift in Sources */,
 				724FC7A62C3EB03400CDA561 /* SceneDelegate.swift in Sources */,
+				724FC7C92C3EB99000CDA561 /* Observable.swift in Sources */,
 				724FC7B82C3EB0D500CDA561 /* MainWeatherViewController.swift in Sources */,
+				724FC7D72C3ECC7200CDA561 /* APIKey.swift in Sources */,
+				724FC7D12C3EC36600CDA561 /* OpenWeather.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,6 +455,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		724FC7CA2C3EBDFB00CDA561 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.9.1;
+			};
+		};
+		724FC7CD2C3EBE0800CDA561 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		724FC7CB2C3EBDFB00CDA561 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 724FC7CA2C3EBDFB00CDA561 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		724FC7CE2C3EBE0800CDA561 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 724FC7CD2C3EBE0800CDA561 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 724FC7982C3EB03400CDA561 /* Project object */;
 }
