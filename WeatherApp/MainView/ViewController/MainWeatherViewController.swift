@@ -37,7 +37,7 @@ final class MainWeatherViewController: BaseViewController {
 }
 
 extension MainWeatherViewController {
-    func bindData() {
+    private func bindData() {
         viewModel.inputViewDidLoadTrigger.value = ()
         
         viewModel.outputWeathertData.bind { weather in
@@ -49,5 +49,10 @@ extension MainWeatherViewController {
                 self.mainView.highAndLowLabel.text = weather?.maxMinTemp()
             }
         }
+        
+        viewModel.outputThreeWeatherData.bind { value in
+            print(value)
+        }
+        
     }
 }

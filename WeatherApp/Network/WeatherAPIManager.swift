@@ -27,4 +27,17 @@ final class WeatherAPIManager {
         }
     }
     
+    func fetchThreeHourWeatherAPI(completionHandler: @escaping (ThreeHourWeather) -> Void) {
+        let url = "\(APIURL.threeHourWeatherURL)\(APIKey.openWeatherID)"
+        
+        AF.request(url).responseDecodable(of: ThreeHourWeather.self) { response in
+            switch response.result {
+            case .success(let success):
+                completionHandler(success)
+            case .failure(let failure):
+                print(failure)
+            }
+        }
+    }
+    
 }

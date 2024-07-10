@@ -11,6 +11,7 @@ final class MainViewModel {
     var inputViewDidLoadTrigger: Observable<Void?> = Observable(nil)
     
     var outputWeathertData: Observable<OpenWeather?> = Observable(nil)
+    var outputThreeWeatherData: Observable<ThreeHourWeather?> = Observable(nil)
     
     init() {
         transform()
@@ -25,6 +26,10 @@ final class MainViewModel {
     private func callRequest() {
         WeatherAPIManager.shared.fetchWeatherAPI { weather in
             self.outputWeathertData.value = weather
+        }
+        
+        WeatherAPIManager.shared.fetchThreeHourWeatherAPI { value in
+            self.outputThreeWeatherData.value = value
         }
     }
 }
