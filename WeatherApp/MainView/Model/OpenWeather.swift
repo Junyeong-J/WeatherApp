@@ -13,12 +13,12 @@ struct OpenWeather: Decodable {
     let name: String
     
     func celsius(temp: Double) -> String {
-        let result = String(format: "%.2f°C", temp - 273.15)
+        let result = String(format: "%.1f°C", temp - 273.15)
         return result
     }
     
     func maxMinTemp() -> String {
-        let result = "\(celsius(temp: main.temp_max)) | \(celsius(temp: main.temp_min))"
+        let result = "최고: \(celsius(temp: main.temp_max)) | 최저: \(celsius(temp: main.temp_min))"
         return result
     }
 }
