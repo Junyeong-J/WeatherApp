@@ -10,12 +10,13 @@ import SnapKit
 
 final class MainWeatherViewController: BaseViewController {
     
-    let cityNameLabel = UILabel()
-    let temperatureLabel = UILabel()
-    let weatherInformationLabel = UILabel()
-    let highAndLowLabel = UILabel()
-    
     let viewModel = MainViewModel()
+    
+    let mainView = MainWeatherView()
+    
+    override func loadView() {
+        view = mainView
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,32 +24,11 @@ final class MainWeatherViewController: BaseViewController {
     }
     
     override func configureHierarchy() {
-        view.addSubview(cityNameLabel)
-        view.addSubview(temperatureLabel)
-        view.addSubview(weatherInformationLabel)
-        view.addSubview(highAndLowLabel)
+        
     }
     
     override func configureConstraints() {
-        cityNameLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(view.safeAreaLayoutGuide)
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(20)
-        }
         
-        temperatureLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(view.safeAreaLayoutGuide)
-            make.top.equalTo(cityNameLabel.snp.bottom).offset(2)
-        }
-        
-        weatherInformationLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(view.safeAreaLayoutGuide)
-            make.top.equalTo(temperatureLabel.snp.bottom).offset(2)
-        }
-        
-        highAndLowLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(view.safeAreaLayoutGuide)
-            make.top.equalTo(weatherInformationLabel.snp.bottom).offset(2)
-        }
     }
     
     override func configureView() {
@@ -62,12 +42,11 @@ extension MainWeatherViewController {
         
         viewModel.outputWeathertData.bind { weather in
             if let cityName = weather?.name, let temp = weather?.main.temp,
-               let detailWeather = weather?.weather.first?.main,
-               let tempMin = weather?.main.temp_min, let tempMax = weather?.main.temp_max{
-                self.cityNameLabel.text = "\(cityName)"
-                self.temperatureLabel.text = "\(temp)"
-                self.weatherInformationLabel.text = "\(detailWeather)"
-                self.highAndLowLabel.text = "\(tempMin)|\(tempMax)"
+               let detailWeather = weather?.weather.first?.main {
+                self.mainView.cityNameLabel.text = "\(cityName)"
+                self.mainView.temperatureLabel.text = weather?.celsius(temp: temp)
+                self.mainView.weatherInformationLabel.text = "\(detailWeather)"
+                self.mainView.highAndLowLabel.text = weather?.maxMinTemp()
             }
         }
     }

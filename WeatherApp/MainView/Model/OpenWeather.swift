@@ -11,6 +11,16 @@ struct OpenWeather: Decodable {
     let weather: [Weather]
     let main: MainWeather
     let name: String
+    
+    func celsius(temp: Double) -> String {
+        let result = String(format: "%.2f°C", temp - 273.15)
+        return result
+    }
+    
+    func maxMinTemp() -> String {
+        let result = "\(celsius(temp: main.temp_max)) | \(celsius(temp: main.temp_min))"
+        return result
+    }
 }
 
 struct MainWeather: Decodable {
