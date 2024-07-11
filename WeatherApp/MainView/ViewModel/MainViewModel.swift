@@ -12,7 +12,6 @@ final class MainViewModel {
     
     var outputWeathertData: Observable<OpenWeather?> = Observable(nil)
     var outputThreeWeatherData: Observable<ThreeHourWeather?> = Observable(nil)
-    
     init() {
         transform()
     }

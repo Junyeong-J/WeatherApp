@@ -24,6 +24,10 @@
 		724FC7D92C3EEC7C00CDA561 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724FC7D82C3EEC7C00CDA561 /* BaseView.swift */; };
 		724FC7DC2C3EED1B00CDA561 /* MainWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724FC7DB2C3EED1B00CDA561 /* MainWeatherView.swift */; };
 		724FC7DF2C3EEEDF00CDA561 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724FC7DE2C3EEEDF00CDA561 /* UILabel+Extension.swift */; };
+		724FC7EE2C3FD57A00CDA561 /* MainThreeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724FC7ED2C3FD57A00CDA561 /* MainThreeCollectionViewCell.swift */; };
+		724FC7F02C3FD5A000CDA561 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724FC7EF2C3FD5A000CDA561 /* BaseCollectionViewCell.swift */; };
+		724FC7F32C3FD62100CDA561 /* ReuseIdentifierProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724FC7F22C3FD62100CDA561 /* ReuseIdentifierProtocol.swift */; };
+		724FC7F62C401A8A00CDA561 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 724FC7F52C401A8A00CDA561 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +48,9 @@
 		724FC7D82C3EEC7C00CDA561 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		724FC7DB2C3EED1B00CDA561 /* MainWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWeatherView.swift; sourceTree = "<group>"; };
 		724FC7DE2C3EEEDF00CDA561 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
+		724FC7ED2C3FD57A00CDA561 /* MainThreeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainThreeCollectionViewCell.swift; sourceTree = "<group>"; };
+		724FC7EF2C3FD5A000CDA561 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		724FC7F22C3FD62100CDA561 /* ReuseIdentifierProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifierProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				724FC7F62C401A8A00CDA561 /* Kingfisher in Frameworks */,
 				724FC7CC2C3EBDFB00CDA561 /* Alamofire in Frameworks */,
 				724FC7CF2C3EBE0800CDA561 /* SnapKit in Frameworks */,
 			);
@@ -79,6 +87,7 @@
 		724FC7A22C3EB03400CDA561 /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				724FC7F12C3FD61A00CDA561 /* Protocol */,
 				724FC7DD2C3EEECB00CDA561 /* Extension */,
 				724FC7D52C3ECBD400CDA561 /* Network */,
 				724FC7C72C3EB98700CDA561 /* Observable */,
@@ -99,6 +108,7 @@
 			children = (
 				724FC7BC2C3EB16200CDA561 /* BaseViewController.swift */,
 				724FC7D82C3EEC7C00CDA561 /* BaseView.swift */,
+				724FC7EF2C3FD5A000CDA561 /* BaseCollectionViewCell.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -158,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				724FC7DB2C3EED1B00CDA561 /* MainWeatherView.swift */,
+				724FC7ED2C3FD57A00CDA561 /* MainThreeCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -168,6 +179,14 @@
 				724FC7DE2C3EEEDF00CDA561 /* UILabel+Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		724FC7F12C3FD61A00CDA561 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				724FC7F22C3FD62100CDA561 /* ReuseIdentifierProtocol.swift */,
+			);
+			path = Protocol;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -189,6 +208,7 @@
 			packageProductDependencies = (
 				724FC7CB2C3EBDFB00CDA561 /* Alamofire */,
 				724FC7CE2C3EBE0800CDA561 /* SnapKit */,
+				724FC7F52C401A8A00CDA561 /* Kingfisher */,
 			);
 			productName = WeatherApp;
 			productReference = 724FC7A02C3EB03400CDA561 /* WeatherApp.app */;
@@ -221,6 +241,7 @@
 			packageReferences = (
 				724FC7CA2C3EBDFB00CDA561 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				724FC7CD2C3EBE0800CDA561 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				724FC7F42C401A8A00CDA561 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 724FC7A12C3EB03400CDA561 /* Products */;
 			projectDirPath = "";
@@ -254,11 +275,14 @@
 				724FC7D42C3ECBB400CDA561 /* WeatherAPIManager.swift in Sources */,
 				724FC7BD2C3EB16200CDA561 /* BaseViewController.swift in Sources */,
 				724FC7A62C3EB03400CDA561 /* SceneDelegate.swift in Sources */,
+				724FC7F32C3FD62100CDA561 /* ReuseIdentifierProtocol.swift in Sources */,
 				724FC7C92C3EB99000CDA561 /* Observable.swift in Sources */,
 				724FC7B82C3EB0D500CDA561 /* MainWeatherViewController.swift in Sources */,
+				724FC7F02C3FD5A000CDA561 /* BaseCollectionViewCell.swift in Sources */,
 				724FC7D92C3EEC7C00CDA561 /* BaseView.swift in Sources */,
 				724FC7DF2C3EEEDF00CDA561 /* UILabel+Extension.swift in Sources */,
 				724FC7D72C3ECC7200CDA561 /* APIKey.swift in Sources */,
+				724FC7EE2C3FD57A00CDA561 /* MainThreeCollectionViewCell.swift in Sources */,
 				724FC7DC2C3EED1B00CDA561 /* MainWeatherView.swift in Sources */,
 				724FC7D12C3EC36600CDA561 /* OpenWeather.swift in Sources */,
 			);
@@ -501,6 +525,14 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		724FC7F42C401A8A00CDA561 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.12.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -513,6 +545,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 724FC7CD2C3EBE0800CDA561 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		724FC7F52C401A8A00CDA561 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 724FC7F42C401A8A00CDA561 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

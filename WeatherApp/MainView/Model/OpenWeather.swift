@@ -46,57 +46,58 @@ struct Weather: Decodable {
 struct ThreeHourWeather: Decodable {
     let list: [WeatherList]
     let city: City
+}
+
+struct WeatherList: Decodable {
+    let dt: Int
+    let main: MainList
+    let weather: [Weathers]
+    let clouds: Clouds
+    let wind: Wind
+    let dt_txt: String
+    let rain: Rain?
+}
+
+struct MainList: Decodable {
+    let temp: Double
+    let feels_like: Double
+    let temp_min: Double
+    let temp_max: Double
+    let pressure: Int
+    let sea_level: Int?
+    let grnd_level: Int?
+    let humidity: Int
+    let temp_kf: Double
+}
+
+struct Weathers: Decodable {
+    let id: Int
+    let main: String
+    let description: String
+    let icon: String
+}
+
+struct Clouds: Decodable {
+    let all: Int
+}
+
+struct Wind: Decodable {
+    let speed: Double
+    let deg: Int
+    let gust: Double?
+}
+
+struct Rain: Decodable {
+    let _3h: Double?
     
-    struct WeatherList: Decodable {
-        let dt: Int
-        let main: MainList
-        let weather: [Weather]
-        let clouds: Clouds
-        let wind: Wind
-        let dt_txt: String
-        let rain: Rain?
-    }
-    
-    struct MainList: Decodable {
-        let temp: Double
-        let feels_like: Double
-        let temp_min: Double
-        let temp_max: Double
-        let pressure: Int
-        let sea_level: Int?
-        let grnd_level: Int?
-        let humidity: Int
-        let temp_kf: Double
-    }
-    
-    struct Weather: Decodable {
-        let id: Int
-        let main: String
-        let description: String
-        let icon: String
-    }
-    
-    struct Clouds: Decodable {
-        let all: Int
-    }
-    
-    struct Wind: Decodable {
-        let speed: Double
-        let deg: Int
-        let gust: Double?
-    }
-    
-    struct Rain: Decodable {
-        let _3h: Double?
-        
-        private enum CodingKeys: String, CodingKey {
-            case _3h = "3h"
-        }
-    }
-    
-    struct City: Decodable {
-        let id: Int
-        let name: String
-        let country: String
+    private enum CodingKeys: String, CodingKey {
+        case _3h = "3h"
     }
 }
+
+struct City: Decodable {
+    let id: Int
+    let name: String
+    let country: String
+}
+

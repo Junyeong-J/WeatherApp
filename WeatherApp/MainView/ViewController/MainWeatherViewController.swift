@@ -11,8 +11,9 @@ import SnapKit
 final class MainWeatherViewController: BaseViewController {
     
     let viewModel = MainViewModel()
-    
     let mainView = MainWeatherView()
+    
+    var threeHourWeatherList: ThreeHourWeather?
     
     override func loadView() {
         view = mainView
@@ -21,6 +22,10 @@ final class MainWeatherViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindData()
+        
+        mainView.threeHourCollecrtionView.dataSource = self
+        mainView.threeHourCollecrtionView.delegate = self
+        mainView.threeHourCollecrtionView.register(MainThreeCollectionViewCell.self, forCellWithReuseIdentifier: MainThreeCollectionViewCell.identifier)
     }
     
     override func configureHierarchy() {
@@ -51,8 +56,24 @@ extension MainWeatherViewController {
         }
         
         viewModel.outputThreeWeatherData.bind { value in
-            print(value)
+            self.mainView.threeHourCollecrtionView.reloadData()
         }
         
     }
+}
+
+extension MainWeatherViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.outputThreeWeatherData.value?.list.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainThreeCollectionViewCell.identifier, for: indexPath) as! MainThreeCollectionViewCell
+        if let data = viewModel.outputThreeWeatherData.value?.list[indexPath.item] {
+            cell.configureData(data: data)
+        }
+        return cell
+    }
+    
+    
 }

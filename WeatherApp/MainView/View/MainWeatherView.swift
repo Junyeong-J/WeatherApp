@@ -10,7 +10,7 @@ import SnapKit
 
 final class MainWeatherView: BaseView {
 
-    let scrollView = UIScrollView()
+    let mainScrollView = UIScrollView()
     let contentView = UIView()
     
     let cityNameLabel = UILabel()
@@ -19,31 +19,49 @@ final class MainWeatherView: BaseView {
     let highAndLowLabel = UILabel()
     
     let threeHourView = UIView()
+    lazy var threeHourCollecrtionView = UICollectionView(frame: .zero, collectionViewLayout: threeHourCollectionViewLayout())
+    
+    private func threeHourCollectionViewLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewFlowLayout()
+        let sectionSpacing: CGFloat = 8
+        let cellSpacing: CGFloat = 4
+        let width = 50
+        layout.itemSize = CGSize(width: width, height: width * 3)
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = cellSpacing
+        layout.minimumInteritemSpacing = cellSpacing
+        layout.sectionInset = UIEdgeInsets(top: sectionSpacing, left: sectionSpacing, bottom: sectionSpacing, right: sectionSpacing)
+        return layout
+    }
+    
     let fiveDayView = UIView()
     let locationView = UIView()
     let etcView = UIView()
     
     override func configureHierarchy() {
-        addSubview(scrollView)
-        scrollView.addSubview(contentView)
+        addSubview(mainScrollView)
+        mainScrollView.addSubview(contentView)
         contentView.addSubview(cityNameLabel)
         contentView.addSubview(temperatureLabel)
         contentView.addSubview(weatherInformationLabel)
         contentView.addSubview(highAndLowLabel)
+        
         contentView.addSubview(threeHourView)
+        threeHourView.addSubview(threeHourCollecrtionView)
+        
         contentView.addSubview(fiveDayView)
         contentView.addSubview(locationView)
         contentView.addSubview(etcView)
     }
     
     override func configureLayout() {
-        scrollView.snp.makeConstraints { make in
+        mainScrollView.snp.makeConstraints { make in
             make.edges.equalTo(safeAreaLayoutGuide)
         }
         
         contentView.snp.makeConstraints { make in
-            make.width.equalTo(scrollView.snp.width)
-            make.verticalEdges.equalTo(scrollView)
+            make.width.equalTo(mainScrollView.snp.width)
+            make.verticalEdges.equalTo(mainScrollView)
         }
         
         cityNameLabel.snp.makeConstraints { make in
@@ -69,7 +87,12 @@ final class MainWeatherView: BaseView {
         threeHourView.snp.makeConstraints { make in
             make.top.equalTo(highAndLowLabel.snp.bottom).offset(50)
             make.horizontalEdges.equalTo(contentView).inset(20)
-            make.height.equalTo(300)
+            make.height.equalTo(200)
+        }
+        
+        threeHourCollecrtionView.snp.makeConstraints { make in
+            make.horizontalEdges.bottom.equalTo(threeHourView)
+            make.height.equalTo(150)
         }
         
         fiveDayView.snp.makeConstraints { make in
