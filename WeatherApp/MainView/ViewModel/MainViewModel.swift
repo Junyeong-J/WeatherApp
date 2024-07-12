@@ -23,9 +23,9 @@ final class MainViewModel {
     }
     
     private func callRequest() {
-        WeatherAPIManager.shared.fetchWeatherAPI { weather in
+        WeatherAPIManager.shared.mainWeatherRequest(api: .MainCityWeather(lat: 35.133331, lon: 128.699997), model: Weather.self, completionHandler: { weather, error in
             self.outputWeathertData.value = weather
-        }
+        })
         
         WeatherAPIManager.shared.fetchThreeHourWeatherAPI { value in
             self.outputThreeWeatherData.value = value
