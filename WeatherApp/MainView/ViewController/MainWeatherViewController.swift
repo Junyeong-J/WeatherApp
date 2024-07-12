@@ -21,6 +21,7 @@ final class MainWeatherViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupToolBarButton()
         bindData()
         
         mainView.threeHourCollecrtionView.dataSource = self
@@ -42,6 +43,16 @@ final class MainWeatherViewController: BaseViewController {
 }
 
 extension MainWeatherViewController {
+    
+    func setupToolBarButton() {
+        navigationController?.isToolbarHidden = false
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let map = UIBarButtonItem(image: UIImage(systemName: "map")?.withTintColor(.black, renderingMode: .alwaysOriginal), style: .plain, target: self, action: #selector(mapClicked))
+        let list = UIBarButtonItem(image: UIImage(systemName: "list.bullet")?.withTintColor(.black, renderingMode: .alwaysOriginal), style: .plain, target: self, action: #selector(listClicked))
+        let barItems = [map, flexibleSpace, flexibleSpace, flexibleSpace, list]
+        self.toolbarItems = barItems
+    }
+    
     private func bindData() {
         viewModel.inputViewDidLoadTrigger.value = ()
         
@@ -60,6 +71,16 @@ extension MainWeatherViewController {
         }
         
     }
+    
+    @objc private func mapClicked() {
+        
+    }
+    
+    @objc private func listClicked() {
+        
+    }
+    
+    
 }
 
 extension MainWeatherViewController: UICollectionViewDelegate, UICollectionViewDataSource {
