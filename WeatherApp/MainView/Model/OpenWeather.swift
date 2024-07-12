@@ -101,3 +101,10 @@ struct City: Decodable {
     let country: String
 }
 
+enum OpenWeatherError: Error {
+    
+    case failedRequest
+    case noData
+    case invalidResponse
+    
+}
