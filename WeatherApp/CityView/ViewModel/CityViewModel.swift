@@ -8,8 +8,12 @@
 import Foundation
 
 final class CityViewModel {
+    
+    let repository = WeatherRepository()
+    
     var inputViewDidLoadTrigger: Observable<Void?> = Observable(nil)
     var inputSearchText: Observable<String?> = Observable(nil)
+    var inputCellSelected: Observable<CityList?> = Observable(nil)
     
     var outputCityData: Observable<[CityList]> = Observable([])
     var outputFilterCityData: Observable<[CityList]> = Observable([])
@@ -26,6 +30,11 @@ final class CityViewModel {
         
         inputSearchText.bind { _ in
             self.filterSearchCityName()
+        }
+        
+        inputCellSelected.bind { weather in
+            guard let weather = weather else {return}
+            self.saveWeather(cityname: weather.name, lat: weather.coord.lat, lon: weather.coord.lon)
         }
     }
     
@@ -63,6 +72,11 @@ final class CityViewModel {
                 $0.name.lowercased().contains(searchText.lowercased())
             }
         }
+    }
+    
+    private func saveWeather(cityname: String, lat: Double, lon: Double) {
+        repository.detectRealmURL()
+        repository.createItem(cityName: cityname, lat: lat, lon: lon)
     }
     
 }

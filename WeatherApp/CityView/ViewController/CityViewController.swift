@@ -96,6 +96,11 @@ extension CityViewController: UITableViewDelegate, UITableViewDataSource {
         cell.configureData(data: viewModel.outputFilterCityData.value[indexPath.row])
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let data = viewModel.outputFilterCityData.value[indexPath.row]
+        viewModel.inputCellSelected.value = data
+    }
 }
 
 extension CityViewController: UISearchBarDelegate {
