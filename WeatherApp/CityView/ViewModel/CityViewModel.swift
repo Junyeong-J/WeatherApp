@@ -9,8 +9,12 @@ import Foundation
 
 final class CityViewModel {
     var inputViewDidLoadTrigger: Observable<Void?> = Observable(nil)
+    var inputSearchText: Observable<String?> = Observable(nil)
     
     var outputCityData: Observable<[CityList]> = Observable([])
+    var outputFilterCityData: Observable<[CityList]> = Observable([])
+    
+    
     init() {
         transform()
     }
@@ -19,13 +23,13 @@ final class CityViewModel {
         inputViewDidLoadTrigger.bind { _ in
             self.callCityRequest()
         }
-    }
-    
-    private func callRequest() {
         
+        inputSearchText.bind { _ in
+            self.filterSearchCityName()
+        }
     }
     
-    func callCityRequest() {
+    private func callCityRequest() {
         guard let path = Bundle.main.path(forResource: "CityList", ofType: "json") else {
             return
         }
@@ -39,11 +43,26 @@ final class CityViewModel {
             do {
                 let cityList = try decoder.decode([CityList].self, from: data)
                 self.outputCityData.value = cityList
+                self.outputFilterCityData.value = cityList
             } catch {
                 print("Decoding error: \(error)")
             }
         }
     }
     
+    private func filterSearchCityName() {
+        guard let searchText = inputSearchText.value else {
+            outputFilterCityData.value = outputCityData.value
+            return
+        }
+        
+        if searchText.isEmpty {
+            outputFilterCityData.value = outputCityData.value
+        } else {
+            outputFilterCityData.value = outputCityData.value.filter {
+                $0.name.lowercased().contains(searchText.lowercased())
+            }
+        }
+    }
     
 }

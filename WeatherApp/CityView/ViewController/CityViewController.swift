@@ -21,6 +21,7 @@ final class CityViewController: BaseViewController {
         makeNavigationUI(title: "City")
         bindData()
         configureTableView()
+        configureSearchBar()
     }
     
     override func configureHierarchy() {
@@ -64,7 +65,7 @@ extension CityViewController {
     private func bindData() {
         viewModel.inputViewDidLoadTrigger.value = ()
         
-        viewModel.outputCityData.bind { _ in
+        viewModel.outputFilterCityData.bind { _ in
             self.cityView.tableView.reloadData()
         }
     }
@@ -76,6 +77,10 @@ extension CityViewController {
         cityView.tableView.register(CityTableViewCell.self, forCellReuseIdentifier: CityTableViewCell.identifier)
     }
     
+    private func configureSearchBar() {
+        cityView.searchBar.delegate = self
+    }
+    
     @objc private func backButtonClicked() {
         navigationController?.popViewController(animated: true)
     }
@@ -83,12 +88,18 @@ extension CityViewController {
 
 extension CityViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.outputCityData.value.count
+        return viewModel.outputFilterCityData.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CityTableViewCell.identifier, for: indexPath) as! CityTableViewCell
-        cell.configureData(data: viewModel.outputCityData.value[indexPath.row])
+        cell.configureData(data: viewModel.outputFilterCityData.value[indexPath.row])
         return cell
+    }
+}
+
+extension CityViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        viewModel.inputSearchText.value = searchText
     }
 }
