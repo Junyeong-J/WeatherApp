@@ -20,11 +20,7 @@ final class CityViewController: BaseViewController {
         super.viewDidLoad()
         makeNavigationUI(title: "City")
         bindData()
-        
-        
-        cityView.tableView.dataSource = self
-        cityView.tableView.delegate = self
-        cityView.tableView.register(CityTableViewCell.self, forCellReuseIdentifier: CityTableViewCell.identifier)
+        configureTableView()
     }
     
     override func configureHierarchy() {
@@ -73,6 +69,13 @@ extension CityViewController {
         }
     }
     
+    private func configureTableView() {
+        cityView.tableView.dataSource = self
+        cityView.tableView.delegate = self
+        cityView.tableView.rowHeight = 56
+        cityView.tableView.register(CityTableViewCell.self, forCellReuseIdentifier: CityTableViewCell.identifier)
+    }
+    
     @objc private func backButtonClicked() {
         navigationController?.popViewController(animated: true)
     }
@@ -85,6 +88,7 @@ extension CityViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CityTableViewCell.identifier, for: indexPath) as! CityTableViewCell
+        cell.configureData(data: viewModel.outputCityData.value[indexPath.row])
         return cell
     }
 }

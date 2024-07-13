@@ -24,7 +24,7 @@ class CityTableViewCell: BaseTableViewCell {
         hashImageView.snp.makeConstraints { make in
             make.top.equalTo(contentView).inset(10)
             make.leading.equalTo(contentView).inset(20)
-            make.size.equalTo(30)
+            make.size.equalTo(25)
         }
         
         cityNameLabel.snp.makeConstraints { make in
@@ -39,9 +39,14 @@ class CityTableViewCell: BaseTableViewCell {
     }
     
     override func configureView() {
-        hashImageView.image = UIImage(systemName: "number")
+        hashImageView.image = UIImage(systemName: "number")?.withTintColor(.black, renderingMode: .alwaysOriginal)
         cityNameLabel.setUILabel("", textAlignment: .left, color: .black, backgroundColor: .clear, font: .boldSystemFont(ofSize: 17), cornerRadius: 0, numberLine: 0)
         countryLabel.setUILabel("", textAlignment: .left, color: .black, backgroundColor: .clear, font: .systemFont(ofSize: 13), cornerRadius: 0, numberLine: 0)
+    }
+    
+    func configureData(data: CityList) {
+        cityNameLabel.text = data.name
+        countryLabel.text = data.country
     }
     
 }
