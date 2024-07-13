@@ -76,7 +76,7 @@ final class CityViewModel {
     
     private func saveWeather(cityname: String, lat: Double, lon: Double) {
         repository.detectRealmURL()
-        repository.createItem(cityName: cityname, lat: lat, lon: lon)
+        repository.createOrUpdateItem(cityName: cityname, lat: lat, lon: lon)
     }
     
 }

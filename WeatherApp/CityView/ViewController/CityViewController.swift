@@ -100,6 +100,7 @@ extension CityViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = viewModel.outputFilterCityData.value[indexPath.row]
         viewModel.inputCellSelected.value = data
+        navigationController?.popViewController(animated: true)
     }
 }
 

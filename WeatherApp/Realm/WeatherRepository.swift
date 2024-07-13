@@ -12,19 +12,23 @@ final class WeatherRepository {
     
     private let realm = try! Realm()
     
-    func createItem(cityName: String, lat: Double, lon: Double) {
-        
-        let item = WeatherData(name: cityName, lat: lat, lon: lon)
-        
+    func createOrUpdateItem(cityName: String, lat: Double, lon: Double) {
         do {
             try realm.write {
-                realm.add(item)
-                print("realm Create Succeed")
+                if let existItem = realm.objects(WeatherData.self).first {
+                    existItem.name = cityName
+                    existItem.lat = lat
+                    existItem.lon = lon
+                    print("realm update succeed")
+                } else {
+                    let item = WeatherData(name: cityName, lat: lat, lon: lon)
+                    realm.add(item)
+                    print("realm Create Succeed")
+                }
             }
         } catch {
             print(error)
         }
-        
     }
     
     func detectRealmURL() {
