@@ -35,4 +35,8 @@ final class WeatherRepository {
         print(realm.configuration.fileURL ?? "")
     }
     
+    func fetchData() -> WeatherData? {
+        return realm.objects(WeatherData.self).first
+    }
+    
 }

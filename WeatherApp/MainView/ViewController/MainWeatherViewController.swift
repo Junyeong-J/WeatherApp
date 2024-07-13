@@ -29,6 +29,11 @@ final class MainWeatherViewController: BaseViewController {
         mainView.threeHourCollecrtionView.register(MainThreeCollectionViewCell.self, forCellWithReuseIdentifier: MainThreeCollectionViewCell.identifier)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        bindData()
+    }
+    
     override func configureHierarchy() {
         
     }
@@ -48,8 +53,8 @@ extension MainWeatherViewController {
         navigationController?.isToolbarHidden = false
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let map = UIBarButtonItem(image: UIImage(systemName: "map")?.withTintColor(.black, renderingMode: .alwaysOriginal), style: .plain, target: self, action: #selector(mapClicked))
-        let list = UIBarButtonItem(image: UIImage(systemName: "list.bullet")?.withTintColor(.black, renderingMode: .alwaysOriginal), style: .plain, target: self, action: #selector(listClicked))
-        let barItems = [map, flexibleSpace, flexibleSpace, flexibleSpace, list]
+        let cityList = UIBarButtonItem(image: UIImage(systemName: "list.bullet")?.withTintColor(.black, renderingMode: .alwaysOriginal), style: .plain, target: self, action: #selector(listClicked))
+        let barItems = [map, flexibleSpace, flexibleSpace, flexibleSpace, cityList]
         self.toolbarItems = barItems
     }
     
@@ -66,7 +71,7 @@ extension MainWeatherViewController {
             }
         }
         
-        viewModel.outputThreeWeatherData.bind { value in
+        viewModel.outputThreeWeatherData.bind { _ in
             self.mainView.threeHourCollecrtionView.reloadData()
         }
         
@@ -77,10 +82,9 @@ extension MainWeatherViewController {
     }
     
     @objc private func listClicked() {
-        
+        let vc = CityViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
-    
-    
 }
 
 extension MainWeatherViewController: UICollectionViewDelegate, UICollectionViewDataSource {

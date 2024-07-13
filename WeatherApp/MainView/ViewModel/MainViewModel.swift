@@ -8,6 +8,9 @@
 import Foundation
 
 final class MainViewModel {
+    
+    let repository = WeatherRepository()
+    
     var inputViewDidLoadTrigger: Observable<Void?> = Observable(nil)
     
     var outputWeathertData: Observable<OpenWeather?> = Observable(nil)
@@ -23,7 +26,14 @@ final class MainViewModel {
     }
     
     private func callRequest() {
-        WeatherAPIManager.shared.mainWeatherRequest(api: .MainCityWeather(lat: 35.133331, lon: 128.699997), model: Weather.self, completionHandler: { weather, error in
+        let defaultLat = 37.654165
+        let defaultLon = 127.049696
+        
+        let weatherData = repository.fetchData()
+        let lat = weatherData?.lat ?? defaultLat
+        let lon = weatherData?.lon ?? defaultLon
+        
+        WeatherAPIManager.shared.mainWeatherRequest(api: .MainCityWeather(lat: lat, lon: lon), model: Weather.self, completionHandler: { weather, error in
             self.outputWeathertData.value = weather
         })
         
