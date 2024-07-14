@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import MapKit
 
 final class MainWeatherView: BaseView {
 
@@ -19,10 +20,7 @@ final class MainWeatherView: BaseView {
     let highAndLowLabel = UILabel()
     
     let threeHourView = UIView()
-    lazy var threeHourCollecrtionView = UICollectionView(frame: .zero, collectionViewLayout: threeHourCollectionViewLayout())
-    
-    let fiveDayTableView = UITableView()
-    
+    lazy var threeHourCollectionView = UICollectionView(frame: .zero, collectionViewLayout: threeHourCollectionViewLayout())
     private func threeHourCollectionViewLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         let sectionSpacing: CGFloat = 8
@@ -37,8 +35,26 @@ final class MainWeatherView: BaseView {
     }
     
     let fiveDayView = UIView()
+    let fiveDayTableView = UITableView()
+    
     let locationView = UIView()
+    let mapView = MKMapView()
+    
     let etcView = UIView()
+    lazy var etcCollectionView = UICollectionView(frame: .zero, collectionViewLayout: etcCollectionViewLayout())
+    
+    func etcCollectionViewLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewFlowLayout()
+        let sectionSpacing: CGFloat = 20
+        let cellSpacing: CGFloat = 10
+        let width = UIScreen.main.bounds.width - (sectionSpacing * 2) - (cellSpacing)
+        layout.itemSize = CGSize(width: width/2, height: width/2)
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = cellSpacing
+        layout.minimumInteritemSpacing = cellSpacing
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        return layout
+    }
     
     override func configureHierarchy() {
         addSubview(mainScrollView)
@@ -49,13 +65,16 @@ final class MainWeatherView: BaseView {
         contentView.addSubview(highAndLowLabel)
         
         contentView.addSubview(threeHourView)
-        threeHourView.addSubview(threeHourCollecrtionView)
+        threeHourView.addSubview(threeHourCollectionView)
         
         contentView.addSubview(fiveDayView)
         fiveDayView.addSubview(fiveDayTableView)
         
         contentView.addSubview(locationView)
+        locationView.addSubview(mapView)
+        
         contentView.addSubview(etcView)
+        etcView.addSubview(etcCollectionView)
     }
     
     override func configureLayout() {
@@ -94,7 +113,7 @@ final class MainWeatherView: BaseView {
             make.height.equalTo(200)
         }
         
-        threeHourCollecrtionView.snp.makeConstraints { make in
+        threeHourCollectionView.snp.makeConstraints { make in
             make.horizontalEdges.bottom.equalTo(threeHourView)
             make.height.equalTo(150)
         }
@@ -117,10 +136,19 @@ final class MainWeatherView: BaseView {
             make.height.equalTo(300)
         }
         
+        mapView.snp.makeConstraints { make in
+            make.horizontalEdges.bottom.equalTo(locationView)
+            make.height.equalTo(250)
+        }
+        
         etcView.snp.makeConstraints { make in
             make.top.equalTo(locationView.snp.bottom).offset(10)
             make.bottom.horizontalEdges.equalTo(contentView).inset(20)
-            make.height.equalTo(500)
+            make.height.equalTo(360)
+        }
+        
+        etcCollectionView.snp.makeConstraints { make in
+            make.edges.equalTo(etcView)
         }
     }
     
