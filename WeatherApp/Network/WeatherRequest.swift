@@ -36,6 +36,7 @@ enum WeatherRequest {
             return ["lat": lat,
                     "lon": lon,
                     "lang": "kr",
+                    "units": "metric",
                     "appid": APIKey.openWeatherID]
         }
     }
