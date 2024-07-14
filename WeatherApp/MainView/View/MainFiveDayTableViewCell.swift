@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 final class MainFiveDayTableViewCell: BaseTableViewCell {
     
@@ -32,7 +33,8 @@ final class MainFiveDayTableViewCell: BaseTableViewCell {
         }
         
         stackView.snp.makeConstraints { make in
-            make.center.equalTo(contentView)
+            make.centerY.equalTo(contentView)
+            make.centerX.equalTo(contentView).offset(-20)
         }
         
         maxLabel.snp.makeConstraints { make in
@@ -41,7 +43,7 @@ final class MainFiveDayTableViewCell: BaseTableViewCell {
         }
         
         weatherImageView.snp.makeConstraints { make in
-            make.size.equalTo(25)
+            make.size.equalTo(35)
         }
     }
     
@@ -51,6 +53,20 @@ final class MainFiveDayTableViewCell: BaseTableViewCell {
         maxLabel.setUILabel("최고 20도", textAlignment: .right, color: .black, backgroundColor: .clear, font: .systemFont(ofSize: 16), cornerRadius: 0, numberLine: 0)
         stackView.axis = .horizontal
         stackView.spacing = 10
-        weatherImageView.backgroundColor = .red
+    }
+    
+    func configureData(data: FiveDayData) {
+        
+        if let date = FormatterManager.shared.dateFormatter.date(from: data.dt) {
+            dayLabel.text = FormatterManager.shared.weekendFormatter.string(from: date)
+        } else {
+            dayLabel.text = data.dt
+        }
+        
+        minLabel.text = data.minToTemp()
+        maxLabel.text = data.maxToTemp()
+        
+        let imageUrl = URL(string: "\(APIURL.weatherIconURL)\(data.icon)@2x.png")
+        weatherImageView.kf.setImage(with: imageUrl)
     }
 }

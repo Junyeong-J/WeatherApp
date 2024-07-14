@@ -7,9 +7,11 @@
 
 import UIKit
 import SnapKit
+import MapKit
 
 final class MainWeatherViewController: BaseViewController {
     
+    let ETCTypes: [ETCType] = [.windSpeed, .cloudAmount, .airBarometric, .humidity]
     let viewModel = MainViewModel()
     let mainView = MainWeatherView()
     
@@ -58,9 +60,14 @@ extension MainWeatherViewController {
     }
     
     private func configureCollectionView() {
-        mainView.threeHourCollecrtionView.dataSource = self
-        mainView.threeHourCollecrtionView.delegate = self
-        mainView.threeHourCollecrtionView.register(MainThreeCollectionViewCell.self, forCellWithReuseIdentifier: MainThreeCollectionViewCell.identifier)
+        mainView.threeHourCollectionView.dataSource = self
+        mainView.threeHourCollectionView.delegate = self
+        mainView.threeHourCollectionView.register(MainThreeCollectionViewCell.self, forCellWithReuseIdentifier: MainThreeCollectionViewCell.identifier)
+        
+        mainView.etcCollectionView.dataSource = self
+        mainView.etcCollectionView.delegate = self
+        mainView.etcCollectionView.register(EtcCollectionViewCell.self, forCellWithReuseIdentifier: EtcCollectionViewCell.identifier)
+        
     }
     
     private func configureTableView() {
@@ -84,10 +91,21 @@ extension MainWeatherViewController {
         }
         
         viewModel.outputThreeWeatherData.bind { _ in
-            self.mainView.threeHourCollecrtionView.reloadData()
+            self.mainView.threeHourCollectionView.reloadData()
+            self.mainView.fiveDayTableView.reloadData()
+        }
+        
+        viewModel.midnightWeatherData.bind { _ in
+            self.mainView.fiveDayTableView.reloadData()
         }
         
     }
+    
+    private func mapSetting() {
+        let center = CLLocationCoordinate2D(latitude: 37.518594, longitude: 126.894798)
+        mainView.mapView.region = MKCoordinateRegion(center: center, latitudinalMeters: 2000, longitudinalMeters: 2000)
+    }
+    
     
     @objc private func mapClicked() {
         
@@ -101,15 +119,27 @@ extension MainWeatherViewController {
 
 extension MainWeatherViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.outputThreeWeatherData.value?.list.count ?? 0
+        if collectionView == mainView.threeHourCollectionView {
+            return viewModel.outputThreeWeatherData.value?.list.count ?? 0
+        } else {
+            return 4
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainThreeCollectionViewCell.identifier, for: indexPath) as! MainThreeCollectionViewCell
-        if let data = viewModel.outputThreeWeatherData.value?.list[indexPath.item] {
-            cell.configureData(data: data)
+        if collectionView == mainView.threeHourCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainThreeCollectionViewCell.identifier, for: indexPath) as! MainThreeCollectionViewCell
+            cell.backgroundColor = #colorLiteral(red: 0.8895074725, green: 0.8895074725, blue: 0.8895074725, alpha: 0.6526127433)
+            if let data = viewModel.outputThreeWeatherData.value?.list[indexPath.item] {
+                cell.configureData(data: data)
+            }
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EtcCollectionViewCell.identifier, for: indexPath) as! EtcCollectionViewCell
+            cell.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+            cell.configureData(data: ETCTypes[indexPath.row])
+            return cell
         }
-        return cell
     }
     
     
@@ -122,6 +152,11 @@ extension MainWeatherViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MainFiveDayTableViewCell.identifier, for: indexPath) as! MainFiveDayTableViewCell
+        
+        if indexPath.row < viewModel.midnightWeatherData.value.count {
+            let data = viewModel.midnightWeatherData.value[indexPath.row]
+            cell.configureData(data: data)
+        }
         
         return cell
     }
