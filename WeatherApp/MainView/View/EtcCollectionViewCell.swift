@@ -41,7 +41,14 @@ final class EtcCollectionViewCell: BaseCollectionViewCell {
         moreInfoLabel.setUILabel("강풍: 000", textAlignment: .left, color: .black, backgroundColor: .clear, font: .systemFont(ofSize: 22), cornerRadius: 0, numberLine: 0)
     }
     
-    func configureData(data: ETCType) {
+    func configureData(data: ETCType, weather: OpenWeather) {
         titleLabel.text = data.rawValue
+        infoLabel.text = data.setInfo(weather: weather)
+        if data == .windSpeed {
+            moreInfoLabel.isHidden = false
+            moreInfoLabel.text = "강풍: \(weather.wind.gust ?? 0)m/s"
+        } else {
+            moreInfoLabel.isHidden = true
+        }
     }
 }

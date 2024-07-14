@@ -14,5 +14,17 @@ enum ETCType: String {
     case airBarometric = "기압"
     case humidity = "습도"
     
+    func setInfo(weather: OpenWeather) -> String {
+        switch self {
+        case .windSpeed:
+            return "\(weather.wind.speed) m/s"
+        case .cloudAmount:
+            return "\(weather.clouds.all) %"
+        case .airBarometric:
+            return "\(weather.main.pressure) hPa"
+        case .humidity:
+            return "\(weather.main.humidity) %"
+        }
+    }
     
 }

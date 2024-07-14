@@ -15,7 +15,7 @@ final class MainViewModel {
     
     var outputWeathertData: Observable<OpenWeather?> = Observable(nil)
     var outputThreeWeatherData: Observable<ThreeHourWeather?> = Observable(nil)
-    var midnightWeatherData: Observable<[FiveDayData]> = Observable([]) // 00시 데이터를 위한 Observable
+    var midnightWeatherData: Observable<[FiveDayData]> = Observable([])
     
     init() {
         transform()

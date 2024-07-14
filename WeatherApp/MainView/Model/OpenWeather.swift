@@ -11,6 +11,8 @@ import Foundation
 struct OpenWeather: Decodable {
     let weather: [Weather]
     let main: MainWeather
+    let wind: Wind
+    let clouds: Clouds
     let name: String
     
     func celsius(temp: Double) -> String {

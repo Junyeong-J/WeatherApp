@@ -14,8 +14,9 @@ final class MainWeatherViewController: BaseViewController {
     let ETCTypes: [ETCType] = [.windSpeed, .cloudAmount, .airBarometric, .humidity]
     let viewModel = MainViewModel()
     let mainView = MainWeatherView()
-    
     var threeHourWeatherList: ThreeHourWeather?
+    
+    let locationManager = CLLocationManager()
     
     override func loadView() {
         view = mainView
@@ -25,7 +26,7 @@ final class MainWeatherViewController: BaseViewController {
         super.viewDidLoad()
         setupToolBarButton()
         bindData()
-        
+        mapSetting()
         configureCollectionView()
         configureTableView()
     }
@@ -33,14 +34,6 @@ final class MainWeatherViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         bindData()
-    }
-    
-    override func configureHierarchy() {
-        
-    }
-    
-    override func configureConstraints() {
-        
     }
     
     override func configureView() {
@@ -88,6 +81,7 @@ extension MainWeatherViewController {
                 self.mainView.weatherInformationLabel.text = "\(detailWeather)"
                 self.mainView.highAndLowLabel.text = weather?.maxMinTemp()
             }
+            self.mainView.etcCollectionView.reloadData()
         }
         
         viewModel.outputThreeWeatherData.bind { _ in
@@ -137,7 +131,9 @@ extension MainWeatherViewController: UICollectionViewDelegate, UICollectionViewD
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EtcCollectionViewCell.identifier, for: indexPath) as! EtcCollectionViewCell
             cell.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-            cell.configureData(data: ETCTypes[indexPath.row])
+            if let weather = viewModel.outputWeathertData.value {
+                cell.configureData(data: ETCTypes[indexPath.row], weather: weather)
+            }
             return cell
         }
     }
