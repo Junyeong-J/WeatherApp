@@ -24,9 +24,8 @@ final class MainWeatherViewController: BaseViewController {
         setupToolBarButton()
         bindData()
         
-        mainView.threeHourCollecrtionView.dataSource = self
-        mainView.threeHourCollecrtionView.delegate = self
-        mainView.threeHourCollecrtionView.register(MainThreeCollectionViewCell.self, forCellWithReuseIdentifier: MainThreeCollectionViewCell.identifier)
+        configureCollectionView()
+        configureTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,6 +55,19 @@ extension MainWeatherViewController {
         let cityList = UIBarButtonItem(image: UIImage(systemName: "list.bullet")?.withTintColor(.black, renderingMode: .alwaysOriginal), style: .plain, target: self, action: #selector(listClicked))
         let barItems = [map, flexibleSpace, flexibleSpace, flexibleSpace, cityList]
         self.toolbarItems = barItems
+    }
+    
+    private func configureCollectionView() {
+        mainView.threeHourCollecrtionView.dataSource = self
+        mainView.threeHourCollecrtionView.delegate = self
+        mainView.threeHourCollecrtionView.register(MainThreeCollectionViewCell.self, forCellWithReuseIdentifier: MainThreeCollectionViewCell.identifier)
+    }
+    
+    private func configureTableView() {
+        mainView.fiveDayTableView.rowHeight = 60
+        mainView.fiveDayTableView.dataSource = self
+        mainView.fiveDayTableView.delegate = self
+        mainView.fiveDayTableView.register(MainFiveDayTableViewCell.self, forCellReuseIdentifier: MainFiveDayTableViewCell.identifier)
     }
     
     private func bindData() {
@@ -97,6 +109,20 @@ extension MainWeatherViewController: UICollectionViewDelegate, UICollectionViewD
         if let data = viewModel.outputThreeWeatherData.value?.list[indexPath.item] {
             cell.configureData(data: data)
         }
+        return cell
+    }
+    
+    
+}
+
+extension MainWeatherViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: MainFiveDayTableViewCell.identifier, for: indexPath) as! MainFiveDayTableViewCell
+        
         return cell
     }
     

@@ -21,6 +21,8 @@ final class MainWeatherView: BaseView {
     let threeHourView = UIView()
     lazy var threeHourCollecrtionView = UICollectionView(frame: .zero, collectionViewLayout: threeHourCollectionViewLayout())
     
+    let fiveDayTableView = UITableView()
+    
     private func threeHourCollectionViewLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         let sectionSpacing: CGFloat = 8
@@ -50,6 +52,8 @@ final class MainWeatherView: BaseView {
         threeHourView.addSubview(threeHourCollecrtionView)
         
         contentView.addSubview(fiveDayView)
+        fiveDayView.addSubview(fiveDayTableView)
+        
         contentView.addSubview(locationView)
         contentView.addSubview(etcView)
     }
@@ -95,10 +99,16 @@ final class MainWeatherView: BaseView {
             make.height.equalTo(150)
         }
         
+        
         fiveDayView.snp.makeConstraints { make in
             make.top.equalTo(threeHourView.snp.bottom).offset(10)
             make.horizontalEdges.equalTo(contentView).inset(20)
-            make.height.equalTo(500)
+            make.height.equalTo(350)
+        }
+        
+        fiveDayTableView.snp.makeConstraints { make in
+            make.bottom.horizontalEdges.equalTo(fiveDayView)
+            make.height.equalTo(300)
         }
         
         locationView.snp.makeConstraints { make in

@@ -40,6 +40,7 @@
 		724FC8172C427C6B00CDA561 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 724FC8162C427C6B00CDA561 /* RealmSwift */; };
 		724FC8182C427C7300CDA561 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 724FC8162C427C6B00CDA561 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		724FC81B2C427DCB00CDA561 /* WeatherRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724FC81A2C427DCB00CDA561 /* WeatherRepository.swift */; };
+		724FC81D2C43A9DF00CDA561 /* MainFiveDayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724FC81C2C43A9DF00CDA561 /* MainFiveDayTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -87,6 +88,7 @@
 		724FC8102C41111500CDA561 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		724FC8132C427BF300CDA561 /* WeatherRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherRealmModel.swift; sourceTree = "<group>"; };
 		724FC81A2C427DCB00CDA561 /* WeatherRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherRepository.swift; sourceTree = "<group>"; };
+		724FC81C2C43A9DF00CDA561 /* MainFiveDayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFiveDayTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +213,7 @@
 			children = (
 				724FC7DB2C3EED1B00CDA561 /* MainWeatherView.swift */,
 				724FC7ED2C3FD57A00CDA561 /* MainThreeCollectionViewCell.swift */,
+				724FC81C2C43A9DF00CDA561 /* MainFiveDayTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -392,6 +395,7 @@
 				724FC8092C410E0B00CDA561 /* CityViewModel.swift in Sources */,
 				724FC7F02C3FD5A000CDA561 /* BaseCollectionViewCell.swift in Sources */,
 				724FC8142C427BF300CDA561 /* WeatherRealmModel.swift in Sources */,
+				724FC81D2C43A9DF00CDA561 /* MainFiveDayTableViewCell.swift in Sources */,
 				724FC7D92C3EEC7C00CDA561 /* BaseView.swift in Sources */,
 				724FC80F2C410FBD00CDA561 /* CityTableViewCell.swift in Sources */,
 				724FC8112C41111500CDA561 /* BaseTableViewCell.swift in Sources */,
