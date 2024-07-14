@@ -14,7 +14,7 @@ struct OpenWeather: Decodable {
     let name: String
     
     func celsius(temp: Double) -> String {
-        let result = String(format: "%.1f°C", temp - 273.15)
+        let result = String(format: "%.1f°C", temp)
         return result
     }
     
@@ -100,6 +100,29 @@ struct City: Decodable {
     let name: String
     let country: String
 }
+
+struct FiveDayData {
+    let minTemp: Double
+    let maxTemp: Double
+    let icon: String
+    let dt: String
+    
+    func celsius(temp: Double) -> String {
+        let result = String(format: "%.f°C", temp)
+        return result
+    }
+    
+    func maxToTemp() -> String {
+        let result = "최고: \(celsius(temp: maxTemp))"
+        return result
+    }
+    
+    func minToTemp() -> String {
+        let result = "최저: \(celsius(temp: minTemp))"
+        return result
+    }
+}
+
 
 enum OpenWeatherError: Error {
     

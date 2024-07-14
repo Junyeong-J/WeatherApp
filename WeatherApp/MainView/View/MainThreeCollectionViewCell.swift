@@ -36,16 +36,20 @@ class MainThreeCollectionViewCell: BaseCollectionViewCell {
     
     override func configureView() {
         stackView.axis = .vertical
-        stackView.spacing = 10 
+        stackView.spacing = 10
         timeLabel.setUILabel("안녕", textAlignment: .center, color: .black, backgroundColor: .clear, font: .systemFont(ofSize: 17), cornerRadius: 0, numberLine: 1)
-        weatherImageView.backgroundColor = .red
-        tempLabel.setUILabel("10도", textAlignment: .center, color: .black, backgroundColor: .clear, font: .systemFont(ofSize: 17), cornerRadius: 0, numberLine: 1)
+        tempLabel.setUILabel("10도", textAlignment: .center, color: .black, backgroundColor: .clear, font: .systemFont(ofSize: 15), cornerRadius: 0, numberLine: 1)
     }
     
     func configureData(data: WeatherList) {
         let imageUrl = URL(string: "\(APIURL.weatherIconURL)\(data.weather.first?.icon ?? "")@2x.png")
         weatherImageView.kf.setImage(with: imageUrl)
-        timeLabel.text = data.dt_txt
-        tempLabel.text = "\(data.main.temp)"
+        if let date = FormatterManager.shared.dateFormatter.date(from: data.dt_txt) {
+            timeLabel.text = FormatterManager.shared.hourFormatter.string(from: date)
+        } else {
+            timeLabel.text = data.dt_txt
+        }
+        
+        tempLabel.text = "\(Int(round(data.main.temp)))°C"
     }
 }
