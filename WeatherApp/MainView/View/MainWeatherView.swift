@@ -20,6 +20,8 @@ final class MainWeatherView: BaseView {
     let highAndLowLabel = UILabel()
     
     let threeHourView = UIView()
+    let threeHourTitleView = UIView()
+    let threeHourTitleLabel = UILabel()
     lazy var threeHourCollectionView = UICollectionView(frame: .zero, collectionViewLayout: threeHourCollectionViewLayout())
     private func threeHourCollectionViewLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
@@ -35,9 +37,13 @@ final class MainWeatherView: BaseView {
     }
     
     let fiveDayView = UIView()
+    let fiveDayTitleView = UIView()
+    let fiveDayTitleLabel = UILabel()
     let fiveDayTableView = UITableView()
     
     let locationView = UIView()
+    let locationTitleView = UIView()
+    let locationTitleLabel = UILabel()
     let mapView = MKMapView()
     
     let etcView = UIView()
@@ -65,12 +71,18 @@ final class MainWeatherView: BaseView {
         contentView.addSubview(highAndLowLabel)
         
         contentView.addSubview(threeHourView)
+        threeHourView.addSubview(threeHourTitleView)
+        threeHourTitleView.addSubview(threeHourTitleLabel)
         threeHourView.addSubview(threeHourCollectionView)
         
         contentView.addSubview(fiveDayView)
+        fiveDayView.addSubview(fiveDayTitleView)
+        fiveDayTitleView.addSubview(fiveDayTitleLabel)
         fiveDayView.addSubview(fiveDayTableView)
         
         contentView.addSubview(locationView)
+        locationView.addSubview(locationTitleView)
+        locationTitleView.addSubview(locationTitleLabel)
         locationView.addSubview(mapView)
         
         contentView.addSubview(etcView)
@@ -113,6 +125,16 @@ final class MainWeatherView: BaseView {
             make.height.equalTo(200)
         }
         
+        threeHourTitleView.snp.makeConstraints { make in
+            make.top.horizontalEdges.equalTo(threeHourView)
+            make.height.equalTo(50)
+        }
+        
+        threeHourTitleLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(threeHourTitleView)
+            make.leading.equalTo(10)
+        }
+        
         threeHourCollectionView.snp.makeConstraints { make in
             make.horizontalEdges.bottom.equalTo(threeHourView)
             make.height.equalTo(150)
@@ -125,6 +147,16 @@ final class MainWeatherView: BaseView {
             make.height.equalTo(350)
         }
         
+        fiveDayTitleView.snp.makeConstraints { make in
+            make.top.horizontalEdges.equalTo(fiveDayView)
+            make.height.equalTo(50)
+        }
+        
+        fiveDayTitleLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(fiveDayTitleView)
+            make.leading.equalTo(10)
+        }
+        
         fiveDayTableView.snp.makeConstraints { make in
             make.bottom.horizontalEdges.equalTo(fiveDayView)
             make.height.equalTo(300)
@@ -134,6 +166,16 @@ final class MainWeatherView: BaseView {
             make.top.equalTo(fiveDayView.snp.bottom).offset(10)
             make.horizontalEdges.equalTo(contentView).inset(20)
             make.height.equalTo(300)
+        }
+        
+        locationTitleView.snp.makeConstraints { make in
+            make.top.horizontalEdges.equalTo(locationView)
+            make.height.equalTo(50)
+        }
+        
+        locationTitleLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(locationTitleView)
+            make.leading.equalTo(10)
         }
         
         mapView.snp.makeConstraints { make in
@@ -158,11 +200,9 @@ final class MainWeatherView: BaseView {
         weatherInformationLabel.setUILabel("", textAlignment: .center, color: .black, backgroundColor: .clear, font: .boldSystemFont(ofSize: 30), cornerRadius: 0, numberLine: 0)
         highAndLowLabel.setUILabel("", textAlignment: .center, color: .black, backgroundColor: .clear, font: .boldSystemFont(ofSize: 20), cornerRadius: 0, numberLine: 0)
         
-        threeHourView.backgroundColor = .blue
-        fiveDayView.backgroundColor = .green
-        locationView.backgroundColor = .red
-        etcView.backgroundColor = .brown
-        
+        threeHourTitleLabel.setUILabel("3시간 간격의 일기예보", textAlignment: .left, color: .black, backgroundColor: .clear, font: .systemFont(ofSize: 19), cornerRadius: 0, numberLine: 0)
+        fiveDayTitleLabel.setUILabel("5일 간의 일기예보", textAlignment: .left, color: .black, backgroundColor: .clear, font: .systemFont(ofSize: 19), cornerRadius: 0, numberLine: 0)
+        locationTitleLabel.setUILabel("위치", textAlignment: .left, color: .black, backgroundColor: .clear, font: .systemFont(ofSize: 19), cornerRadius: 0, numberLine: 0)
         
     }
 }
