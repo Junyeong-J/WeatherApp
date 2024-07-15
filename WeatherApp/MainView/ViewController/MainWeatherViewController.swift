@@ -26,7 +26,6 @@ final class MainWeatherViewController: BaseViewController {
         super.viewDidLoad()
         setupToolBarButton()
         bindData()
-        mapSetting()
         configureCollectionView()
         configureTableView()
     }
@@ -89,15 +88,20 @@ extension MainWeatherViewController {
             self.mainView.fiveDayTableView.reloadData()
         }
         
-        viewModel.midnightWeatherData.bind { _ in
+        viewModel.outputFiveDayWeatherData.bind { _ in
             self.mainView.fiveDayTableView.reloadData()
         }
         
-    }
-    
-    private func mapSetting() {
-        let center = CLLocationCoordinate2D(latitude: 37.518594, longitude: 126.894798)
-        mainView.mapView.region = MKCoordinateRegion(center: center, latitudinalMeters: 2000, longitudinalMeters: 2000)
+        viewModel.outputLocationData.bind { weather in
+            guard let weather = weather else {return}
+            let center = CLLocationCoordinate2D(latitude: weather.lat, longitude: weather.lon)
+            self.mainView.mapView.region = MKCoordinateRegion(center: center, latitudinalMeters: 200000, longitudinalMeters: 200000)
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = .init(latitude: weather.lat, longitude: weather.lon)
+            self.mainView.mapView.addAnnotation(annotation)
+        }
+        
+        
     }
     
     
@@ -149,8 +153,8 @@ extension MainWeatherViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MainFiveDayTableViewCell.identifier, for: indexPath) as! MainFiveDayTableViewCell
         
-        if indexPath.row < viewModel.midnightWeatherData.value.count {
-            let data = viewModel.midnightWeatherData.value[indexPath.row]
+        if indexPath.row < viewModel.outputFiveDayWeatherData.value.count {
+            let data = viewModel.outputFiveDayWeatherData.value[indexPath.row]
             cell.configureData(data: data)
         }
         

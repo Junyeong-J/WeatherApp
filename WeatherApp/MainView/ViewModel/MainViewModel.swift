@@ -15,7 +15,8 @@ final class MainViewModel {
     
     var outputWeathertData: Observable<OpenWeather?> = Observable(nil)
     var outputThreeWeatherData: Observable<ThreeHourWeather?> = Observable(nil)
-    var midnightWeatherData: Observable<[FiveDayData]> = Observable([])
+    var outputFiveDayWeatherData: Observable<[FiveDayData]> = Observable([])
+    var outputLocationData: Observable<WeatherData?> = Observable(nil)
     
     init() {
         transform()
@@ -24,6 +25,7 @@ final class MainViewModel {
     private func transform() {
         inputViewDidLoadTrigger.bind { _ in
             self.callRequest()
+            self.locationMap()
         }
     }
     
@@ -75,10 +77,13 @@ final class MainViewModel {
             fiveDayData.append(fiveDayItem)// 담기
         }
         
-        midnightWeatherData.value = fiveDayData
+        outputFiveDayWeatherData.value = fiveDayData
     }
 
-   
+    private func locationMap() {
+        let weatherData = repository.fetchData()
+        outputLocationData.value = weatherData
+    }
 
 }
 
