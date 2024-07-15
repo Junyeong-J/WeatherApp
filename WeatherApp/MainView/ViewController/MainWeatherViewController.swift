@@ -104,6 +104,9 @@ extension MainWeatherViewController {
     
     @objc private func mapClicked() {
         let vc = MapViewController()
+        vc.locationData = { latitude, longitude in
+            print(latitude, longitude)
+        }
         navigationController?.pushViewController(vc, animated: true)
     }
     

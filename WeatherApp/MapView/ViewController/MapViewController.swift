@@ -11,6 +11,7 @@ import MapKit
 final class MapViewController: BaseViewController {
     
     let mapView = MapView()
+    var locationData: ((Double, Double) -> Void)?
     
     override func loadView() {
         view = mapView
@@ -94,6 +95,18 @@ extension MapViewController {
         
         present(alert, animated: true, completion: nil)
     }
+    
+    private func setNaviBackButton() {
+        let backButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backButtonClicked))
+        navigationItem.leftBarButtonItem = backButton
+    }
+    
+    @objc private func backButtonClicked() {
+        if let location = mapView.locationManager.location?.coordinate {
+            locationData?(location.latitude, location.longitude)
+        }
+        navigationController?.popViewController(animated: true)
+    }
 }
 
 extension MapViewController: CLLocationManagerDelegate {
@@ -101,6 +114,7 @@ extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let coordinate = locations.last?.coordinate {
             print("lat: \(coordinate.latitude), lon: \(coordinate.longitude)")
+            locationData?(coordinate.latitude, coordinate.longitude)
             setRegionAndAnnotation(center: coordinate)
         }
         mapView.locationManager.stopUpdatingLocation()
