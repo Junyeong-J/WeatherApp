@@ -12,6 +12,7 @@ import MapKit
 final class MapView: BaseView {
     
     let mapView = MKMapView()
+    let locationManager = CLLocationManager()
     
     override func configureHierarchy() {
         addSubview(mapView)
