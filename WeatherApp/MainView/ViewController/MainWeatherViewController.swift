@@ -100,13 +100,11 @@ extension MainWeatherViewController {
             annotation.coordinate = .init(latitude: weather.lat, longitude: weather.lon)
             self.mainView.mapView.addAnnotation(annotation)
         }
-        
-        
     }
     
-    
     @objc private func mapClicked() {
-        
+        let vc = MapViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc private func listClicked() {

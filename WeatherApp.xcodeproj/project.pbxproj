@@ -44,6 +44,8 @@
 		724FC81F2C440FED00CDA561 /* EtcCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724FC81E2C440FED00CDA561 /* EtcCollectionViewCell.swift */; };
 		724FC8212C44143300CDA561 /* ETCType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724FC8202C44143300CDA561 /* ETCType.swift */; };
 		724FC8252C44227A00CDA561 /* FormatterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724FC8242C44227A00CDA561 /* FormatterManager.swift */; };
+		724FC82E2C45819700CDA561 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724FC82D2C45819700CDA561 /* MapViewController.swift */; };
+		724FC8322C4581D800CDA561 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724FC8312C4581D800CDA561 /* MapView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -95,6 +97,8 @@
 		724FC81E2C440FED00CDA561 /* EtcCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcCollectionViewCell.swift; sourceTree = "<group>"; };
 		724FC8202C44143300CDA561 /* ETCType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCType.swift; sourceTree = "<group>"; };
 		724FC8242C44227A00CDA561 /* FormatterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatterManager.swift; sourceTree = "<group>"; };
+		724FC82D2C45819700CDA561 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		724FC8312C4581D800CDA561 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +144,7 @@
 				724FC7C72C3EB98700CDA561 /* Observable */,
 				724FC7C02C3EB19700CDA561 /* MainView */,
 				724FC8032C410C5900CDA561 /* CityView */,
+				724FC82C2C45818100CDA561 /* MapView */,
 				724FC7BB2C3EB14900CDA561 /* Base */,
 				724FC7A32C3EB03400CDA561 /* AppDelegate.swift */,
 				724FC7A52C3EB03400CDA561 /* SceneDelegate.swift */,
@@ -304,6 +309,31 @@
 			path = Realm;
 			sourceTree = "<group>";
 		};
+		724FC82C2C45818100CDA561 /* MapView */ = {
+			isa = PBXGroup;
+			children = (
+				724FC8302C4581D000CDA561 /* View */,
+				724FC82F2C4581BF00CDA561 /* ViewController */,
+			);
+			path = MapView;
+			sourceTree = "<group>";
+		};
+		724FC82F2C4581BF00CDA561 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				724FC82D2C45819700CDA561 /* MapViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		724FC8302C4581D000CDA561 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				724FC8312C4581D800CDA561 /* MapView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -396,6 +426,7 @@
 				724FC7BD2C3EB16200CDA561 /* BaseViewController.swift in Sources */,
 				724FC7A62C3EB03400CDA561 /* SceneDelegate.swift in Sources */,
 				724FC8062C410C8600CDA561 /* CityViewController.swift in Sources */,
+				724FC8322C4581D800CDA561 /* MapView.swift in Sources */,
 				724FC7F32C3FD62100CDA561 /* ReuseIdentifierProtocol.swift in Sources */,
 				724FC7C92C3EB99000CDA561 /* Observable.swift in Sources */,
 				724FC7B82C3EB0D500CDA561 /* MainWeatherViewController.swift in Sources */,
@@ -416,6 +447,7 @@
 				724FC7D72C3ECC7200CDA561 /* APIKey.swift in Sources */,
 				724FC7EE2C3FD57A00CDA561 /* MainThreeCollectionViewCell.swift in Sources */,
 				724FC7DC2C3EED1B00CDA561 /* MainWeatherView.swift in Sources */,
+				724FC82E2C45819700CDA561 /* MapViewController.swift in Sources */,
 				724FC7D12C3EC36600CDA561 /* OpenWeather.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
