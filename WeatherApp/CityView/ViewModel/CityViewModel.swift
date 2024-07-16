@@ -20,21 +20,26 @@ final class CityViewModel {
     
     
     init() {
+        print("CityViewModel init")
         transform()
     }
     
+    deinit {
+        print("CityViewModel Deinit")
+    }
+    
     private func transform() {
-        inputViewDidLoadTrigger.bind { _ in
-            self.callCityRequest()
+        inputViewDidLoadTrigger.bind { [weak self] _ in
+            self?.callCityRequest()
         }
         
-        inputSearchText.bind { _ in
-            self.filterSearchCityName()
+        inputSearchText.bind { [weak self] _ in
+            self?.filterSearchCityName()
         }
         
-        inputCellSelected.bind { weather in
+        inputCellSelected.bind { [weak self] weather in
             guard let weather = weather else {return}
-            self.saveWeather(cityname: weather.name, lat: weather.coord.lat, lon: weather.coord.lon)
+            self?.saveWeather(cityname: weather.name, lat: weather.coord.lat, lon: weather.coord.lon)
         }
     }
     

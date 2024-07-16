@@ -24,6 +24,10 @@ final class CityViewController: BaseViewController {
         configureSearchBar()
     }
     
+    deinit {
+        print("CityViewController Deinit")
+    }
+    
     override func configureHierarchy() {
         
     }
@@ -65,8 +69,8 @@ extension CityViewController {
     private func bindData() {
         viewModel.inputViewDidLoadTrigger.value = ()
         
-        viewModel.outputFilterCityData.bind { _ in
-            self.cityView.tableView.reloadData()
+        viewModel.outputFilterCityData.bind { [weak self] _ in
+            self?.cityView.tableView.reloadData()
         }
     }
     
