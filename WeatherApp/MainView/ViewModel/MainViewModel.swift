@@ -81,8 +81,13 @@ final class MainViewModel {
     }
 
     private func locationMap() {
-        let weatherData = repository.fetchData()
-        outputLocationData.value = weatherData
+        var weatherData = repository.fetchData()
+        if weatherData == nil {
+            weatherData = WeatherData(name: "", lat: 37.654165, lon: 127.049696)
+            outputLocationData.value = weatherData
+        } else {
+            outputLocationData.value = weatherData
+        }
     }
 
 }
