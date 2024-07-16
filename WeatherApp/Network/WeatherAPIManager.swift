@@ -14,8 +14,8 @@ final class WeatherAPIManager {
     
     private init() { }
     
-    typealias OpenWeatherHandler = (OpenWeather?, OpenWeatherError?) -> Void
-    typealias OpenWeatherThreeHourHandler = (ThreeHourWeather?, OpenWeatherError?) -> Void
+    typealias OpenWeatherHandler = (Result<OpenWeather, OpenWeatherError>) -> Void
+    typealias OpenWeatherThreeHourHandler = (Result<ThreeHourWeather, OpenWeatherError>) -> Void
     
     func mainWeatherRequest<T: Decodable>(api: WeatherRequest, model: T.Type, completionHandler: @escaping OpenWeatherHandler) {
         AF.request(api.endPoint, method: api.method,
@@ -26,9 +26,9 @@ final class WeatherAPIManager {
         .responseDecodable(of: OpenWeather.self) { response in
             switch response.result{
             case .success(let value):
-                completionHandler(value, nil)
+                completionHandler(.success(value))
             case .failure(let error):
-                completionHandler(nil, .failedRequest)
+                completionHandler(.failure(.failedRequest))
                 print(error)
             }
         }
@@ -43,9 +43,9 @@ final class WeatherAPIManager {
         .responseDecodable(of: ThreeHourWeather.self) { response in
             switch response.result{
             case .success(let value):
-                completionHandler(value, nil)
+                completionHandler(.success(value))
             case .failure(let error):
-                completionHandler(nil, .failedRequest)
+                completionHandler(.failure(.failedRequest))
                 print(error)
             }
         }

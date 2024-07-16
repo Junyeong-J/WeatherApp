@@ -19,13 +19,18 @@ final class MainViewModel {
     var outputLocationData: Observable<WeatherData?> = Observable(nil)
     
     init() {
+        print("MainViewModel init")
         transform()
     }
     
+    deinit {
+        print("MainViewModel Deinit")
+    }
+    
     private func transform() {
-        inputViewDidLoadTrigger.bind { _ in
-            self.callRequest()
-            self.locationMap()
+        inputViewDidLoadTrigger.bind { [weak self] _ in
+            self?.callRequest()
+            self?.locationMap()
         }
     }
     
@@ -37,13 +42,24 @@ final class MainViewModel {
         let lat = weatherData?.lat ?? defaultLat
         let lon = weatherData?.lon ?? defaultLon
         
-        WeatherAPIManager.shared.mainWeatherRequest(api: .MainCityWeather(lat: lat, lon: lon), model: Weather.self, completionHandler: { weather, error in
-            self.outputWeathertData.value = weather
+        WeatherAPIManager.shared.mainWeatherRequest(api: .MainCityWeather(lat: lat, lon: lon), model: Weather.self, completionHandler: { [weak self] result in
+            switch result {
+            case .success(let weather):
+                self?.outputWeathertData.value = weather
+            case .failure(let error):
+                print(error)
+            }
+            
         })
         
-        WeatherAPIManager.shared.fetchThreeHourWeatherAPI(api: .ThreeHourWeather(lat: lat, lon: lon), model: WeatherList.self, completionHandler: { weather, error in
-            self.outputThreeWeatherData.value = weather
-            self.extractMidnightWeatherData()
+        WeatherAPIManager.shared.fetchThreeHourWeatherAPI(api: .ThreeHourWeather(lat: lat, lon: lon), model: WeatherList.self, completionHandler: { [weak self] result in
+            switch result {
+            case .success(let weather):
+                self?.outputThreeWeatherData.value = weather
+                self?.extractMidnightWeatherData()
+            case .failure(let error):
+                print(error)
+            }
         })
     }
     
