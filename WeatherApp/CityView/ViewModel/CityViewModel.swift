@@ -9,7 +9,7 @@ import Foundation
 
 final class CityViewModel {
     
-    let repository = WeatherRepository()
+    private let repository = WeatherRepository.shared
     
     var inputViewDidLoadTrigger: Observable<Void?> = Observable(nil)
     var inputSearchText: Observable<String?> = Observable(nil)

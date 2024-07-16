@@ -30,6 +30,11 @@ final class MainWeatherViewController: BaseViewController {
         configureTableView()
     }
     
+    deinit {
+        print("MainWeatherViewController Deinit")
+        locationManager.stopUpdatingLocation()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         bindData()
@@ -72,33 +77,33 @@ extension MainWeatherViewController {
     private func bindData() {
         viewModel.inputViewDidLoadTrigger.value = ()
         
-        viewModel.outputWeathertData.bind { weather in
+        viewModel.outputWeathertData.bind { [weak self] weather in
             if let cityName = weather?.name, let temp = weather?.main.temp,
                let detailWeather = weather?.weather.first?.main {
-                self.mainView.cityNameLabel.text = "\(cityName)"
-                self.mainView.temperatureLabel.text = weather?.celsius(temp: temp)
-                self.mainView.weatherInformationLabel.text = "\(detailWeather)"
-                self.mainView.highAndLowLabel.text = weather?.maxMinTemp()
+                self?.mainView.cityNameLabel.text = "\(cityName)"
+                self?.mainView.temperatureLabel.text = weather?.celsius(temp: temp)
+                self?.mainView.weatherInformationLabel.text = "\(detailWeather)"
+                self?.mainView.highAndLowLabel.text = weather?.maxMinTemp()
             }
-            self.mainView.etcCollectionView.reloadData()
+            self?.mainView.etcCollectionView.reloadData()
         }
         
-        viewModel.outputThreeWeatherData.bind { _ in
-            self.mainView.threeHourCollectionView.reloadData()
-            self.mainView.fiveDayTableView.reloadData()
+        viewModel.outputThreeWeatherData.bind { [weak self] _ in
+            self?.mainView.threeHourCollectionView.reloadData()
+            self?.mainView.fiveDayTableView.reloadData()
         }
         
-        viewModel.outputFiveDayWeatherData.bind { _ in
-            self.mainView.fiveDayTableView.reloadData()
+        viewModel.outputFiveDayWeatherData.bind { [weak self] _ in
+            self?.mainView.fiveDayTableView.reloadData()
         }
         
-        viewModel.outputLocationData.bind { weather in
+        viewModel.outputLocationData.bind { [weak self] weather in
             guard let weather = weather else {return}
             let center = CLLocationCoordinate2D(latitude: weather.lat, longitude: weather.lon)
-            self.mainView.mapView.region = MKCoordinateRegion(center: center, latitudinalMeters: 200000, longitudinalMeters: 200000)
+            self?.mainView.mapView.region = MKCoordinateRegion(center: center, latitudinalMeters: 200000, longitudinalMeters: 200000)
             let annotation = MKPointAnnotation()
             annotation.coordinate = .init(latitude: weather.lat, longitude: weather.lon)
-            self.mainView.mapView.addAnnotation(annotation)
+            self?.mainView.mapView.addAnnotation(annotation)
         }
     }
     

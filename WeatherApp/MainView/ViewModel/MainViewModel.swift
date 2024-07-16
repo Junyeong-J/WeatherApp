@@ -9,7 +9,7 @@ import Foundation
 
 final class MainViewModel {
     
-    let repository = WeatherRepository()
+    private let repository = WeatherRepository.shared
     
     var inputViewDidLoadTrigger: Observable<Void?> = Observable(nil)
     

@@ -10,6 +10,10 @@ import RealmSwift
 
 final class WeatherRepository {
     
+    static let shared = WeatherRepository()
+    
+    private init() { }
+    
     private let realm = try! Realm()
     
     func createOrUpdateItem(cityName: String, lat: Double, lon: Double) {
