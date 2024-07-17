@@ -12,6 +12,7 @@ final class MainViewModel {
     private let repository = WeatherRepository.shared
     
     var inputViewDidLoadTrigger: Observable<Void?> = Observable(nil)
+    var inputMyLocation: Observable<[Double]?> = Observable(nil)
     
     var outputWeathertData: Observable<OpenWeather?> = Observable(nil)
     var outputThreeWeatherData: Observable<ThreeHourWeather?> = Observable(nil)
@@ -31,6 +32,13 @@ final class MainViewModel {
         inputViewDidLoadTrigger.bind { [weak self] _ in
             self?.callRequest()
             self?.locationMap()
+        }
+        
+        inputMyLocation.bind { [weak self] coordinates in
+            guard let coordinates = coordinates, coordinates.count == 2 else { return }
+            let lat = coordinates[0]
+            let lon = coordinates[1]
+            self?.saveMyLocation(lat: lat, lon: lon)
         }
     }
     
@@ -95,7 +103,7 @@ final class MainViewModel {
         
         outputFiveDayWeatherData.value = fiveDayData
     }
-
+    
     private func locationMap() {
         var weatherData = repository.fetchData()
         if weatherData == nil {
@@ -105,7 +113,18 @@ final class MainViewModel {
             outputLocationData.value = weatherData
         }
     }
-
+    
+    private func saveMyLocation(lat: Double, lon: Double) {
+        repository.createOrUpdateItem(cityName: "MyLocation", lat: lat, lon: lon)
+        var weatherData = repository.fetchData()
+        if weatherData == nil {
+            weatherData = WeatherData(name: "", lat: 37.654165, lon: 127.049696)
+            outputLocationData.value = weatherData
+        } else {
+            outputLocationData.value = weatherData
+        }
+    }
+    
 }
 
 extension Array where Element: Hashable {

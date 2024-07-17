@@ -32,7 +32,6 @@ final class MainWeatherViewController: BaseViewController {
     
     deinit {
         print("MainWeatherViewController Deinit")
-        locationManager.stopUpdatingLocation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -99,6 +98,7 @@ extension MainWeatherViewController {
         
         viewModel.outputLocationData.bind { [weak self] weather in
             guard let weather = weather else {return}
+            self?.mainView.mapView.removeAnnotations(self?.mainView.mapView.annotations ?? [])
             let center = CLLocationCoordinate2D(latitude: weather.lat, longitude: weather.lon)
             self?.mainView.mapView.region = MKCoordinateRegion(center: center, latitudinalMeters: 200000, longitudinalMeters: 200000)
             let annotation = MKPointAnnotation()
@@ -109,7 +109,8 @@ extension MainWeatherViewController {
     
     @objc private func mapClicked() {
         let vc = MapViewController()
-        vc.locationData = { latitude, longitude in
+        vc.locationData = { [weak self] latitude, longitude in
+            self?.viewModel.inputMyLocation.value = [latitude, longitude]
             print(latitude, longitude)
         }
         navigationController?.pushViewController(vc, animated: true)
