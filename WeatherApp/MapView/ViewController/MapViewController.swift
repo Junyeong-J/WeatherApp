@@ -47,11 +47,13 @@ extension MapViewController {
     }
     
     func checkDeviceLocationAuthorization() {
-        if CLLocationManager.locationServicesEnabled() {
-            checkCurrentLocationAuthorization()
-        } else {
-            let alert = UIAlertController(title: nil, message: "위치 서비스가 꺼져 있어서, 위치 권한 요청을 할 수 없어요.", preferredStyle: .alert)
-            present(alert, animated: true, completion: nil)
+        DispatchQueue.global().async { [weak self] in
+            if CLLocationManager.locationServicesEnabled() {
+                self?.checkCurrentLocationAuthorization()
+            } else {
+                let alert = UIAlertController(title: nil, message: "위치 서비스가 꺼져 있어서, 위치 권한 요청을 할 수 없어요.", preferredStyle: .alert)
+                self?.present(alert, animated: true, completion: nil)
+            }
         }
     }
     
