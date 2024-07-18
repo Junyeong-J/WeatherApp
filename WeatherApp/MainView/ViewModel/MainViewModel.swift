@@ -50,17 +50,16 @@ final class MainViewModel {
         let lat = weatherData?.lat ?? defaultLat
         let lon = weatherData?.lon ?? defaultLon
         
-        WeatherAPIManager.shared.mainWeatherRequest(api: .MainCityWeather(lat: lat, lon: lon), model: Weather.self, completionHandler: { [weak self] result in
+        WeatherAPIManager.shared.openWeatherRequest(api: .MainCityWeather(lat: lat, lon: lon), model: OpenWeather.self) { [weak self] result in
             switch result {
             case .success(let weather):
                 self?.outputWeathertData.value = weather
             case .failure(let error):
                 print(error)
             }
-            
-        })
+        }
         
-        WeatherAPIManager.shared.fetchThreeHourWeatherAPI(api: .ThreeHourWeather(lat: lat, lon: lon), model: WeatherList.self, completionHandler: { [weak self] result in
+        WeatherAPIManager.shared.openWeatherRequest(api: .ThreeHourWeather(lat: lat, lon: lon), model: ThreeHourWeather.self) { [weak self] result in
             switch result {
             case .success(let weather):
                 self?.outputThreeWeatherData.value = weather
@@ -68,7 +67,7 @@ final class MainViewModel {
             case .failure(let error):
                 print(error)
             }
-        })
+        }
     }
     
     private func extractMidnightWeatherData() {
