@@ -7,15 +7,30 @@
 
 import UIKit
 
-class BaseViewController: UIViewController {
-
+class BaseViewController<RootView: UIView>: UIViewController {
+    
+    let rootView: RootView
+    
+    init() {
+        self.rootView = RootView()
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func loadView() {
+        view = rootView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureHierarchy()
         configureView()
         configureConstraints()
     }
-     
+    
     func configureHierarchy() {
         
     }
@@ -40,5 +55,5 @@ class BaseViewController: UIViewController {
         alert.addAction(cancel)
         present(alert, animated: true)
     }
-     
+    
 }

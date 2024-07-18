@@ -8,14 +8,9 @@
 import UIKit
 import MapKit
 
-final class MapViewController: BaseViewController {
+final class MapViewController: BaseViewController<MapView> {
     
-    let mapView = MapView()
     var locationData: ((Double, Double) -> Void)?
-    
-    override func loadView() {
-        view = mapView
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,12 +33,12 @@ final class MapViewController: BaseViewController {
 
 extension MapViewController {
     func configureLocation() {
-        mapView.locationManager.delegate = self
+        rootView.locationManager.delegate = self
     }
     
     func setRegionAndAnnotation(center: CLLocationCoordinate2D) {
         let region = MKCoordinateRegion(center: center, latitudinalMeters: 500, longitudinalMeters: 500)
-        mapView.mapView.setRegion(region, animated: true)
+        rootView.mapView.setRegion(region, animated: true)
     }
     
     func checkDeviceLocationAuthorization() {
@@ -62,20 +57,20 @@ extension MapViewController {
         var status: CLAuthorizationStatus
         
         if #available(iOS 14.0, *) {
-            status = mapView.locationManager.authorizationStatus
+            status = rootView.locationManager.authorizationStatus
         } else {
             status = CLLocationManager.authorizationStatus()
         }
         
         switch status {
         case .notDetermined:
-            mapView.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            mapView.locationManager.requestWhenInUseAuthorization()
+            rootView.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            rootView.locationManager.requestWhenInUseAuthorization()
         case .denied:
             setRegionAndAnnotation(center: CLLocationCoordinate2D(latitude: 37.517742, longitude: 126.886463))
             showAlertToOpenSettings()
         case .authorizedWhenInUse:
-            mapView.locationManager.startUpdatingLocation()
+            rootView.locationManager.startUpdatingLocation()
         default:
             print(status)
         }
@@ -104,7 +99,7 @@ extension MapViewController {
     }
     
     @objc private func backButtonClicked() {
-        if let location = mapView.locationManager.location?.coordinate {
+        if let location = rootView.locationManager.location?.coordinate {
             locationData?(location.latitude, location.longitude)
         }
         navigationController?.popViewController(animated: true)
@@ -119,7 +114,7 @@ extension MapViewController: CLLocationManagerDelegate {
             locationData?(coordinate.latitude, coordinate.longitude)
             setRegionAndAnnotation(center: coordinate)
         }
-        mapView.locationManager.stopUpdatingLocation()
+        rootView.locationManager.stopUpdatingLocation()
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {

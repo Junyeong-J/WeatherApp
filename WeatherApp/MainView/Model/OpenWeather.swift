@@ -8,6 +8,7 @@
 import Foundation
 
 //MARK: - 상단 한가지 지역 날씨 정보
+// DTO
 struct OpenWeather: Decodable {
     let weather: [Weather]
     let main: MainWeather
@@ -24,6 +25,7 @@ struct OpenWeather: Decodable {
         let result = "최고: \(celsius(temp: main.temp_max)) | 최저: \(celsius(temp: main.temp_min))"
         return result
     }
+
 }
 
 struct MainWeather: Decodable {

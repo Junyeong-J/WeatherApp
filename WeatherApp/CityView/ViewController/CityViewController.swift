@@ -7,14 +7,9 @@
 
 import UIKit
 
-final class CityViewController: BaseViewController {
+final class CityViewController: BaseViewController<CityView> {
     
-    let cityView = CityView()
     let viewModel = CityViewModel()
-    
-    override func loadView() {
-        view = cityView
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,19 +65,19 @@ extension CityViewController {
         viewModel.inputViewDidLoadTrigger.value = ()
         
         viewModel.outputFilterCityData.bind { [weak self] _ in
-            self?.cityView.tableView.reloadData()
+            self?.rootView.tableView.reloadData()
         }
     }
     
     private func configureTableView() {
-        cityView.tableView.dataSource = self
-        cityView.tableView.delegate = self
-        cityView.tableView.rowHeight = 56
-        cityView.tableView.register(CityTableViewCell.self, forCellReuseIdentifier: CityTableViewCell.identifier)
+        rootView.tableView.dataSource = self
+        rootView.tableView.delegate = self
+        rootView.tableView.rowHeight = 56
+        rootView.tableView.register(CityTableViewCell.self, forCellReuseIdentifier: CityTableViewCell.identifier)
     }
     
     private func configureSearchBar() {
-        cityView.searchBar.delegate = self
+        rootView.searchBar.delegate = self
     }
     
     @objc private func backButtonClicked() {
