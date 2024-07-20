@@ -57,3 +57,32 @@ class BaseViewController<RootView: UIView>: UIViewController {
     }
     
 }
+
+extension BaseViewController {
+    func makeNavigationUI(title: String, leftButtonImage: UIImage? = UIImage(systemName: "chevron.left"), leftButtonAction: Selector? = nil, rightButtonImage: UIImage?, rightButtonAction: Selector? = nil) {
+        navigationController?.isNavigationBarHidden = false
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.configureWithTransparentBackground()
+        navigationBarAppearance.backgroundColor = .white
+        
+        UINavigationBar.appearance().standardAppearance = navigationBarAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
+        
+        navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+        navigationController?.navigationBar.compactAppearance = navigationBarAppearance
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.tintColor = .darkGray
+        
+        if let leftAction = leftButtonAction {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: leftButtonImage, style: .plain, target: self, action: leftAction)
+        }
+        
+        if let rightAction = rightButtonAction {
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: rightButtonImage, style: .plain, target: self, action: rightAction)
+        }
+        
+        navigationItem.title = title
+    }
+}

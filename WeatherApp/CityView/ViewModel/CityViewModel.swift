@@ -65,18 +65,15 @@ final class CityViewModel {
     }
     
     private func filterSearchCityName() {
-        guard let searchText = inputSearchText.value else {
+        guard let searchText = inputSearchText.value, !searchText.isEmpty else {
             outputFilterCityData.value = outputCityData.value
             return
         }
         
-        if searchText.isEmpty {
-            outputFilterCityData.value = outputCityData.value
-        } else {
-            outputFilterCityData.value = outputCityData.value.filter {
-                $0.name.lowercased().contains(searchText.lowercased())
-            }
+        outputFilterCityData.value = outputCityData.value.filter {
+            $0.name.lowercased().contains(searchText.lowercased())
         }
+        
     }
     
     private func saveWeather(cityname: String, lat: Double, lon: Double) {

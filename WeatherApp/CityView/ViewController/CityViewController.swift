@@ -13,7 +13,7 @@ final class CityViewController: BaseViewController<CityView> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        makeNavigationUI(title: "City")
+        makeNavigationUI(title: "City",leftButtonAction: #selector(backButtonClicked) , rightButtonImage: UIImage(systemName: "ellipsis.circle"))
         bindData()
         configureTableView()
         configureSearchBar()
@@ -23,14 +23,6 @@ final class CityViewController: BaseViewController<CityView> {
         print("CityViewController Deinit")
     }
     
-    override func configureHierarchy() {
-        
-    }
-    
-    override func configureConstraints() {
-        
-    }
-    
     override func configureView() {
         super.configureView()
     }
@@ -38,28 +30,6 @@ final class CityViewController: BaseViewController<CityView> {
 }
 
 extension CityViewController {
-    func makeNavigationUI(title: String) {
-        navigationController?.isNavigationBarHidden = false
-        let navigationBarAppearance = UINavigationBarAppearance()
-        navigationBarAppearance.configureWithTransparentBackground()
-        navigationBarAppearance.backgroundColor = .white
-        
-        UINavigationBar.appearance().standardAppearance = navigationBarAppearance
-        UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
-        
-        navigationController?.navigationBar.standardAppearance = navigationBarAppearance
-        navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
-        navigationController?.navigationBar.compactAppearance = navigationBarAppearance
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.tintColor = .darkGray
-        
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backButtonClicked))
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"),
-                                                                 menu: nil)
-        
-        navigationItem.title = title
-    }
     
     private func bindData() {
         viewModel.inputViewDidLoadTrigger.value = ()
