@@ -41,7 +41,7 @@ final class MainWeatherViewController: BaseViewController<MainWeatherView> {
 
 extension MainWeatherViewController {
     
-    func setupToolBarButton() {
+    private func setupToolBarButton() {
         navigationController?.isToolbarHidden = false
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let map = UIBarButtonItem(image: UIImage(systemName: "map")?.withTintColor(.black, renderingMode: .alwaysOriginal), style: .plain, target: self, action: #selector(mapClicked))
@@ -72,14 +72,7 @@ extension MainWeatherViewController {
         viewModel.inputViewDidLoadTrigger.value = ()
         
         viewModel.outputWeathertData.bind { [weak self] weather in
-            if let cityName = weather?.name, let temp = weather?.main.temp,
-               let detailWeather = weather?.weather.first?.main {
-                self?.rootView.cityNameLabel.text = "\(cityName)"
-                self?.rootView.temperatureLabel.text = weather?.celsius(temp: temp)
-                self?.rootView.weatherInformationLabel.text = "\(detailWeather)"
-                self?.rootView.highAndLowLabel.text = weather?.maxMinTemp()
-            }
-            self?.rootView.etcCollectionView.reloadData()
+            self?.updateWeatherView(with: weather)
         }
         
         viewModel.outputThreeWeatherData.bind { [weak self] _ in
@@ -93,13 +86,32 @@ extension MainWeatherViewController {
         
         viewModel.outputLocationData.bind { [weak self] weather in
             guard let weather = weather else {return}
-            self?.rootView.mapView.removeAnnotations(self?.rootView.mapView.annotations ?? [])
-            let center = CLLocationCoordinate2D(latitude: weather.lat, longitude: weather.lon)
-            self?.rootView.mapView.region = MKCoordinateRegion(center: center, latitudinalMeters: 200000, longitudinalMeters: 200000)
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = .init(latitude: weather.lat, longitude: weather.lon)
-            self?.rootView.mapView.addAnnotation(annotation)
+            self?.updateMapView(with: weather)
         }
+    }
+    
+    private func updateWeatherView(with weather: OpenWeather?) {
+        guard let weather = weather else { return }
+        
+        let cityName = weather.name
+        let temp = weather.main.temp
+        let detailWeather = weather.weather.first?.main ?? ""
+        
+        rootView.cityNameLabel.text = cityName
+        rootView.temperatureLabel.text = weather.celsius(temp: temp)
+        rootView.weatherInformationLabel.text = detailWeather
+        rootView.highAndLowLabel.text = weather.maxMinTemp()
+        
+        rootView.etcCollectionView.reloadData()
+    }
+    
+    private func updateMapView(with weather: WeatherData) {
+        rootView.mapView.removeAnnotations(rootView.mapView.annotations)
+        let center = CLLocationCoordinate2D(latitude: weather.lat, longitude: weather.lon)
+        rootView.mapView.region = MKCoordinateRegion(center: center, latitudinalMeters: 200000, longitudinalMeters: 200000)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = .init(latitude: weather.lat, longitude: weather.lon)
+        rootView.mapView.addAnnotation(annotation)
     }
     
     @objc private func mapClicked() {
@@ -122,7 +134,7 @@ extension MainWeatherViewController: UICollectionViewDelegate, UICollectionViewD
         if collectionView == rootView.threeHourCollectionView {
             return viewModel.outputThreeWeatherData.value?.list.count ?? 0
         } else {
-            return 4
+            return ETCTypes.count
         }
     }
     
@@ -149,19 +161,14 @@ extension MainWeatherViewController: UICollectionViewDelegate, UICollectionViewD
 
 extension MainWeatherViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return viewModel.outputFiveDayWeatherData.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MainFiveDayTableViewCell.identifier, for: indexPath) as! MainFiveDayTableViewCell
-        
-        if indexPath.row < viewModel.outputFiveDayWeatherData.value.count {
-            let data = viewModel.outputFiveDayWeatherData.value[indexPath.row]
-            cell.configureData(data: data)
-        }
-        
+        let data = viewModel.outputFiveDayWeatherData.value[indexPath.row]
+        cell.configureData(data: data)
         return cell
     }
-    
     
 }
