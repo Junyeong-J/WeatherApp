@@ -20,7 +20,6 @@ final class MainWeatherViewController: BaseViewController<MainWeatherView> {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupToolBarButton()
-        bindData()
         configureCollectionView()
         configureTableView()
     }
