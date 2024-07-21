@@ -104,26 +104,18 @@ final class MainViewModel {
     }
     
     private func locationMap() {
-        var weatherData = repository.fetchData()
-        if weatherData == nil {
-            weatherData = WeatherData(name: "", lat: 37.654165, lon: 127.049696)
+        if let weatherData = repository.fetchData() {
             outputLocationData.value = weatherData
         } else {
-            outputLocationData.value = weatherData
+            let defaultLocation = WeatherData(name: "", lat: 37.654165, lon: 127.049696)
+            outputLocationData.value = defaultLocation
         }
     }
     
     private func saveMyLocation(lat: Double, lon: Double) {
         repository.createOrUpdateItem(cityName: "MyLocation", lat: lat, lon: lon)
-        var weatherData = repository.fetchData()
-        if weatherData == nil {
-            weatherData = WeatherData(name: "", lat: 37.654165, lon: 127.049696)
-            outputLocationData.value = weatherData
-        } else {
-            outputLocationData.value = weatherData
-        }
+        locationMap()
     }
-    
 }
 
 extension Array where Element: Hashable {
